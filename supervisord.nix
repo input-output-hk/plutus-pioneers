@@ -5,8 +5,8 @@
 , writeScriptBin
 , coreutils
 , lighttpd
-, plutus-apps
-, cardano-node
+, plutus
+, cardano
 , symlinkJoin
 , linkFarm
 , minica
@@ -27,8 +27,8 @@ let
     };
     "program:playground-client" = let
 
-      plutusDocs = plutus-apps.packages.x86_64-linux.docs.site;
-      client = plutus-apps.packages.x86_64-linux.plutus-playground.client;
+      plutusDocs = plutus.docs;
+      client = plutus.playground-client;
       docs = linkFarm plutusDocs.name [{ name = "doc"; path = plutusDocs; }];
       webroot = symlinkJoin {
         name = "plutus-playground-client-and-docs";
@@ -85,9 +85,9 @@ let
       stderr_logfile = "${stateDir}/playground-client.stderr";
     };
     "program:playground-server" = let
-      ghcWithPackages = plutus-apps.packages.x86_64-linux.plutus-apps.haskell.project.ghcWithPackages (ps: [ ps.plutus-core ps.plutus-tx ps.plutus-contract ps.plutus-ledger ps.playground-common ]);
+      ghcWithPackages = plutus.ghc;
     in {
-      command = "${plutus-apps.packages.x86_64-linux.plutus-apps.haskell.packages.plutus-playground-server.components.exes.plutus-playground-server}/bin/plutus-playground-server webserver";
+      command = "${plutus.playground-server}/bin/plutus-playground-server webserver";
       environment = lib.concatStringsSep "," [
         "WEBGHC_URL=http://localhost:8080"
         "FRONTEND_URL=https://localhost:8009"
@@ -99,7 +99,7 @@ let
       stderr_logfile = "${stateDir}/playground-server.stderr";
     };
     "program:node-testnet" = {
-      command = ''${cardano-node.packages.x86_64-linux."testnet/node"}/bin/cardano-node-testnet'';
+      command = ''${cardano.testnet-node}/bin/cardano-node-testnet'';
       stdout_logfile = "${stateDir}/node-testnet.stdout";
       stderr_logfile = "${stateDir}/node-testnet.stderr";
       stopsignal = "INT";

@@ -1,8 +1,7 @@
-{ inputs, self }:
 final: prev:
 let
   lib = final.lib;
-  supervisorScripts = final.callPackage ./supervisord.nix { inherit (inputs) plutus-apps cardano-node; };
+  supervisorScripts = final.callPackage ./supervisord.nix { inherit (final) plutus cardano; };
 in {
   inherit (supervisorScripts) start stop;
   devShell = prev.mkShell rec {
@@ -11,7 +10,7 @@ in {
       stop
       python3Packages.supervisor
       coreutils
-      inputs.cardano-node.packages.x86_64-linux.cardano-cli
+      cardano.cli
     ];
     shellHook = ''
       echo "Plutus Pioneers Shell Tools" \

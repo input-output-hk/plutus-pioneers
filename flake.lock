@@ -50,13 +50,13 @@
         "type": "github"
       }
     },
-    "cardano-node": {
+    "cardano": {
       "inputs": {
         "customConfig": "customConfig",
         "haskellNix": "haskellNix",
         "iohkNix": "iohkNix",
         "nixpkgs": [
-          "cardano-node",
+          "cardano",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -280,7 +280,7 @@
         "hpc-coveralls": "hpc-coveralls",
         "nix-tools": "nix-tools",
         "nixpkgs": [
-          "cardano-node",
+          "cardano",
           "nixpkgs"
         ],
         "nixpkgs-2003": "nixpkgs-2003",
@@ -339,7 +339,7 @@
     "iohkNix": {
       "inputs": {
         "nixpkgs": [
-          "cardano-node",
+          "cardano",
           "nixpkgs"
         ]
       },
@@ -503,7 +503,7 @@
         "type": "github"
       }
     },
-    "plutus-apps": {
+    "plutus": {
       "inputs": {
         "cardano-repo-tool": "cardano-repo-tool",
         "easy-purescript-nix": "easy-purescript-nix",
@@ -571,9 +571,9 @@
     },
     "root": {
       "inputs": {
-        "cardano-node": "cardano-node",
+        "cardano": "cardano",
         "nixpkgs": "nixpkgs",
-        "plutus-apps": "plutus-apps",
+        "plutus": "plutus",
         "utils": "utils_2"
       }
     },
