@@ -10,7 +10,8 @@
 , symlinkJoin
 , linkFarm
 , minica
-, python3 }:
+, python3
+, darwin }:
 let
   mkSupervisor = lib.generators.toINI {};
   supervisorConfig = writeText "supervisor.conf" (mkSupervisor ({
@@ -91,7 +92,7 @@ let
       environment = lib.concatStringsSep "," [
         "WEBGHC_URL=http://localhost:8080"
         "FRONTEND_URL=https://localhost:8009"
-        "PATH=${ghcWithPackages}/bin"
+        "PATH=${ghcWithPackages}/bin${lib.optionalString stdenv.hostPlatform.isDarwin ":${darwin.binutils-unwrapped}/bin"}"
         "GITHUB_CALLBACK_PATH=https://localhost:8009/api/oauth/github/callback"
         "PORT=8080"
       ];
